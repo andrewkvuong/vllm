@@ -29,22 +29,22 @@ def vllm_version_matches_substr(substr: str) -> bool:
     return substr in vllm_version
 
 
-def tpu_platform_plugin() -> Optional[str]:
-    is_tpu = False
-    logger.debug("Checking if TPU platform is available.")
-    try:
-        # While it's technically possible to install libtpu on a
-        # non-TPU machine, this is a very uncommon scenario. Therefore,
-        # we assume that libtpu is installed if and only if the machine
-        # has TPUs.
-        import libtpu  # noqa: F401
-        is_tpu = True
-        logger.debug("Confirmed TPU platform is available.")
-    except Exception as e:
-        logger.debug("TPU platform is not available because: %s", str(e))
-        pass
+# def tpu_platform_plugin() -> Optional[str]:
+#     is_tpu = False
+#     logger.debug("Checking if TPU platform is available.")
+#     try:
+#         # While it's technically possible to install libtpu on a
+#         # non-TPU machine, this is a very uncommon scenario. Therefore,
+#         # we assume that libtpu is installed if and only if the machine
+#         # has TPUs.
+#         import libtpu  # noqa: F401
+#         is_tpu = True
+#         logger.debug("Confirmed TPU platform is available.")
+#     except Exception as e:
+#         logger.debug("TPU platform is not available because: %s", str(e))
+#         pass
 
-    return "vllm.platforms.tpu.TpuPlatform" if is_tpu else None
+#     return "vllm.platforms.tpu.TpuPlatform" if is_tpu else None
 
 
 def cuda_platform_plugin() -> Optional[str]:
