@@ -11,8 +11,6 @@ from vllm.model_executor.layers.quantization.kernels.scaled_mm.ScaledMMLinearKer
     ScaledMMLinearKernel, ScaledMMLinearLayerConfig)
 from vllm.model_executor.layers.quantization.kernels.scaled_mm.triton import (
     TritonScaledMMLinearKernel)
-from vllm.model_executor.layers.quantization.kernels.scaled_mm.xla import (
-    XLAScaledMMLinearKernel)
 from vllm.platforms import PlatformEnum, current_platform
 
 # in priority/performance order (when available)
@@ -20,7 +18,6 @@ _POSSIBLE_KERNELS: Dict[PlatformEnum, List[Type[ScaledMMLinearKernel]]] = {
     PlatformEnum.CPU: [CutlassScaledMMLinearKernel],
     PlatformEnum.CUDA: [CutlassScaledMMLinearKernel],
     PlatformEnum.ROCM: [AiterScaledMMLinearKernel, TritonScaledMMLinearKernel],
-    PlatformEnum.TPU: [XLAScaledMMLinearKernel],
 }
 
 
