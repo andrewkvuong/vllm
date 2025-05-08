@@ -289,7 +289,7 @@ class MultiHeadAttention(nn.Module):
             backend = _Backend.XFORMERS
 
         self.attn_backend = backend if backend in {
-            _Backend.TORCH_SDPA, _Backend.XFORMERS, _Backend.PALLAS_VLLM_V1
+            _Backend.TORCH_SDPA, _Backend.XFORMERS
         } else _Backend.TORCH_SDPA
 
     def forward(
@@ -326,12 +326,6 @@ class MultiHeadAttention(nn.Module):
                                                  key,
                                                  value,
                                                  scale=self.scale)
-            out = out.transpose(1, 2)
-        elif self.attn_backend == _Backend.PALLAS_VLLM_V1:
-            query, key, value = (x.transpose(1, 2)
-                                 for x in (query, key, value))
-            from torch_xla.experimental.custom_kernel import flash_attention
-            out = flash_attention(query, key, value, sm_scale=self.scale)
             out = out.transpose(1, 2)
 
         return out.reshape(bsz, q_len, -1)
