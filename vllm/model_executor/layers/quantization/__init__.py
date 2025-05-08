@@ -9,7 +9,6 @@ QuantizationMethods = Literal[
     "aqlm",
     "awq",
     "deepspeedfp",
-    "tpu_int8",
     "fp8",
     "ptpc_fp8",
     "fbgemm_fp8",
@@ -107,14 +106,12 @@ def get_quantization_config(quantization: str) -> Type[QuantizationConfig]:
     from .neuron_quant import NeuronQuantConfig
     from .ptpc_fp8 import PTPCFp8Config
     from .qqq import QQQConfig
-    from .torchao import TorchAOConfig
-    from .tpu_int8 import Int8TpuConfig
+    from .torchao import TorchAOConfig 
 
     method_to_config: dict[str, Type[QuantizationConfig]] = {
         "aqlm": AQLMConfig,
         "awq": AWQConfig,
         "deepspeedfp": DeepSpeedFPConfig,
-        "tpu_int8": Int8TpuConfig,
         "fp8": Fp8Config,
         "fbgemm_fp8": FBGEMMFp8Config,
         "modelopt": ModelOptFp8Config,
